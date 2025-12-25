@@ -63,7 +63,7 @@ AI
 ```
 
 ## System Architecture
-
+!(WhatsApp Image 2025-12-25 at 17.03.07.jpeg)
 
 
 
