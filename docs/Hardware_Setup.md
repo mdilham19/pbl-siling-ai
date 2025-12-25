@@ -262,7 +262,10 @@ pip install --upgrade pip
 
 5. Install library Python untuk IoT dan AI
 ```bash
-pip install RPi.GPIO spidev adafruit-circuitpython-dht flask flask-cors torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+pip install RPi.GPIO spidev adafruit-circuitpython-dht flask flask-cors
+```
+```bash
+pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 ```bash
 pip install ultralytics psycopg2-binary python-dotenv opencv-python numpy pillow
