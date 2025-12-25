@@ -63,7 +63,7 @@ AI
 ```
 
 ## System Architecture
-!(WhatsApp Image 2025-12-25 at 17.03.07.jpeg)
+![System Architecture](WhatsApp%20Image%202025-12-25%20at%2017.03.07.jpeg)
 
 
 
