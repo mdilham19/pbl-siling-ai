@@ -262,11 +262,125 @@ pip install --upgrade pip
 
 5. Install library Python untuk IoT dan AI
 ```bash
-pip install RPi.GPIO spidev adafruit-circuitpython-dht flask flask-cors \
-```
-```bash
-torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
+pip install RPi.GPIO spidev adafruit-circuitpython-dht flask flask-cors torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 ```
 ```bash
 pip install ultralytics psycopg2-binary python-dotenv opencv-python numpy pillow
+```
+#### Langkah 3: Enable SPI Interface
+1. SPI perlu diaktifkan agar Raspberry Pi dapat berkomunikasi dengan MCP3008.
+```bash
+sudo raspi-config
+```
+Di dalam menu konfigurasi, pilih urutan berikut:
+  - **Interface Options → SPI → Yes → OK → Finish**
+2. Reboot sistem agar perubahan diterapkan.
+```bash
+sudo reboot
+```
+#### Langkah 4: Konfigurasi Database
+1. Test koneksi ke database server (PostgreSQL)
+```bash
+nc -zv 10.197.x.x 5432
+```
+2. Jika koneksi berhasil, buat file .env untuk menyimpan konfigurasi database.
+```bash
+cat > .env << EOF 
+API_KEY=siling_ai_secret_key 
+DB_HOST=10.197x.x 
+DB_NAME=xxx 
+DB_USER=xxx 
+DB_PASS=xxx
+```
+#### Langkah 4: Setup Model YOLO
+1. Buat folder untuk menyimpan model AI
+```bash
+mkdir -p ~/Documents/AI
+```
+2. Salin file model YOLO (`best.pt`) ke folder tersebut.
+3. Proses transfer dapat dilakukan dengan **drag & drop** dari komputer ke **VS Code Explorer**.
+
+## Bagian 4: Deployment & Production
+
+Bagian ini menjelaskan proses menjalankan aplikasi secara langsung serta
+mengonfigurasikannya agar dapat berjalan otomatis saat Raspberry Pi dinyalakan.
+
+#### Langkah 1: Menjalankan Aplikasi Flask
+```bash
+cd AI
+source venv/bin/activate
+python app.py
+```
+Aplikasi dapat diakses melalui browser komputer pada alamat:
+```bash
+http://siling-ai.local:5000
+```
+#### Langkah 2: Konfigurasi Systemd Service (Auto-start)
+Systemd digunakan agar aplikasi Siling AI berjalan otomatis saat sistem boot.
+```bash
+sudo nano /etc/systemd/system/siling-ai.service
+```
+Isi file service dengan konfigurasi berikut:
+```bash
+[Unit]
+Description=Siling AI IoT Monitoring System
+After=network.target multi-user.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/AI
+Environment="PATH=/home/pi/AI/venv/bin"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/home/pi/AI/venv/bin/python app.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+```
+Aktifkan dan jalankan service:
+```text
+sudo systemctl daemon-reload
+sudo systemctl enable siling-ai
+sudo systemctl start siling-ai
+sudo systemctl status siling-ai
+```
+Jika status menunjukkan active (**running**), maka aplikasi telah berhasil dideploy dan berjalan otomatis sebagai service.
+
+## Bagian 5: Emergency Recovery
+Bagian ini digunakan sebagai panduan pemulihan sistem apabila terjadi kegagalan atau crash pada aplikasi Siling AI.
+
+Jika Sistem Mengalami Crash Total
+
+1. Amankan data dengan mengambil backup file `sensor_cache.json` jika masih tersedia.
+2. Lakukan re-flash MicroSD menggunakan **Raspberry Pi Imager**.
+3. Restore source code aplikasi dari repository Git atau backup lokal.
+4. Jalankan ulang service aplikasi:
+```bash
+sudo systemctl restart siling-ai
+```
+**Quick Reset Commands**
+
+Gunakan perintah berikut untuk pemulihan cepat tanpa instalasi ulang penuh.
+Reload konfigurasi systemd dan restart service
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart siling-ai
+```
+Hapus cache sensor dan restart service
+```bash
+sudo rm -f ~/AI/sensor_cache.json
+sudo systemctl restart siling-ai
+```
+Factory reset (extreme)
+```bash
+sudo rm -rf ~/AI/venv
+cd ~/AI && python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+sudo systemctl restart siling-ai
 ```
