@@ -30,7 +30,40 @@ SILING-AI merupakan sistem pemantauan lingkungan rumah sehat berbasis _Internet 
 | DHT22 | Pengukuran suhu dan kelembapan |
 | MQ-2 | Deteksi gas dan asap rokok |
 | MQ-135 | Pemantauan kualitas udara |
-| pH Meter | Pengukuran kualitas air |
+| Sensor pH analog | Pengukuran kualitas air |
 | BH1750 | Pengukuran intensitas cahaya |
-| Logitech C920e | Deteksi jentik nyamuk |
+| Logitech C920e | Deteksi visual jentik nyamuk |
+| Breadboard | Papan penyusun rangkaian sensor |
+| Kabel jumper | Menghubungkan antar rankaian sensor |
+| Power supply 5V 3A dengan kabel USB-C  | Sumber catu daya listrik |
+| MicroSD card 128GB | Media penyimpanan |
+| Card Reader | Pembaca kartu memori |
+
+## Folder structure
+
+```
+AI 
+├── app.py              # Kode utama aplikasi Flask      
+├── requirements.txt    # Dependencies Python 
+├── .env                # File konfigurasi environment         
+├── sensor_cache.json   # Cache data sensor (tergenerate otomatis)         
+│ 
+├── static/ 
+│   ├── uploads/         # Gambar yang diupload      
+│   └── results/ 
+│       └── detections/  # Hasil deteksi AI dengan bounding box 
+│ 
+├── templates/ 
+│   └── index.html       # Halaman web dashboard     
+│ 
+├── venv/                # Virtual environment Python                
+└── Documents/ 
+    └── AI/ 
+       └── best (18).pt  # Model YOLO untuk deteksi jentik
+```
+
+## System Architecture
+
+
+
 
