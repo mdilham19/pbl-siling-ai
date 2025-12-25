@@ -65,5 +65,20 @@ AI
 ## System Architecture
 ![System Architecture](WhatsApp%20Image%202025-12-25%20at%2017.03.07.jpeg)
 
+## Limitations 
+Batasan dari proyek ini adalah sebagai berikut: 
+1. Jenis parameter lingkungan yang dipantau terbatas pada kualitas udara, suhu, kelembaban, kualitas air, dan intensitas cahaya, tidak mencakup faktor lain seperti kebisingan atau kepadatan penghuni. 
+2. AI hanya digunakan untuk mendeteksi dan menganalisis jentik nyamuk, sehingga belum mencakup parameter lingkungan lainnya seperti suhu, kelembaban, intensitas cahaya, kualitas oksigen, kadar gas beracun, asap, maupun kondisi udara secara keseluruhan. 
+3. Website masih bersifat lokal, sehingga hanya dapat diakses melalui jaringan tertentu dan belum tersedia secara global melalui internet publik. 
+4. Sistem peringatan dini berbasis website hanya digunakan untuk notifikasi visual, belum mencakup integrasi dengan SMS, aplikasi mobile, atau sistem notifikasi berbasis IoT lainnya. 
+5. Skala implementasi masih sebatas satu titik pemasangan pada lingkup RT.
+
+## Future Development
+Adapun beberapa pengembangan lanjutan yang dapat dilakukan pada sistem ini di masa mendatang antara lain sebagai berikut:
+1. Pengembangan notifikasi melalui aplikasi mobile atau platform pesan instan seperti WhatsApp dan Telegram untuk meningkatkan kecepatan respons pengguna terhadap kondisi berbahaya.
+2. Peningkatan model AI agar mampu mengklasifikasikan jenis nyamuk (misalnya Aedes aegypti, Anopheles, dan Culex) guna mendukung pencegahan penyakit berbasis vektor.
+3. Pemanfaatan teknologi LoRa sebagai media komunikasi data agar sistem dapat beroperasi tanpa ketergantungan pada hotspot pribadi.
+4. Pengembangan desain perangkat yang lebih ringkas dan terintegrasi untuk meningkatkan kemudahan instalasi dan penggunaan.
+5. Perluasan cakupan sistem dari skala RT ke wilayah yang lebih luas seperti RW atau desa.
 
 
